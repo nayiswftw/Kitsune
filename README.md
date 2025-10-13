@@ -1,10 +1,6 @@
----
-
 # 🦊 Kitsune
 
 ### *The Intelligent Developer Collaboration Platform*
-
----
 
 ## ✨ Inspiration
 The inspiration behind Kitsune stemmed from the challenges we've all faced as developers when collaborating on code projects. We realized the need for a tool that simplifies the process, streamlines code understanding, and enhances teamwork. Kitsune was born out of this necessity to create a developer-friendly collaboration platform.
