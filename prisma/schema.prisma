@@ -27,6 +27,7 @@ model User {
 
     userToProjects UserToProject[]
     questionsAsked Question[]
+    creditTransactions CreditTransaction[]
 }
 
 model Project {
@@ -196,4 +197,43 @@ model GithubPullRequest {
     url         String
 
     @@unique([projectId, prNumber])
+}
+
+model CreditPackage {
+    id          String   @id @default(cuid())
+    createdAt   DateTime @default(now())
+    updatedAt   DateTime @updatedAt
+
+    name        String
+    credits     Int
+    price       Float // Price in dollars (for demo purposes)
+    description String?
+    isActive    Boolean  @default(true)
+
+    purchases   CreditTransaction[]
+}
+
+model CreditTransaction {
+    id        String   @id @default(cuid())
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+
+    userId    String
+    user      User   @relation(fields: [userId], references: [id])
+
+    amount    Int // Positive for purchases, negative for usage
+    type      TransactionType
+    description String?
+
+    packageId String?
+    package   CreditPackage? @relation(fields: [packageId], references: [id])
+
+    balanceAfter Int // Balance after this transaction
+}
+
+enum TransactionType {
+    PURCHASE
+    USAGE
+    REFUND
+    BONUS
 }
