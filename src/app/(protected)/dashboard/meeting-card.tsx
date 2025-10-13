@@ -10,8 +10,26 @@ import { api } from '@/trpc/react';
 import { toast } from 'sonner';
 import useProject from '@/hooks/use-project';
 import { useRouter } from 'next/navigation';
+import { useMutation } from '@tanstack/react-query';
+import axios from 'axios';
 const MeetingCard = () => {
     const { project } = useProject();
+    const processMeeting = useMutation({
+        mutationFn: async (data: { meetingUrl: string, meetingId: string }) => {
+            const { meetingUrl, meetingId } = data;
+            const response = await axios.post('/api/process-meeting', { meetingUrl, meetingId })
+            return response.data;
+        },
+        onError: (error: any) => {
+            console.error('Error processing meeting:', error)
+            const errorMessage = error.response?.data?.details || error.message || 'Failed to process meeting'
+            toast.error(errorMessage)
+        },
+        onSuccess: () => {
+            toast.success('Meeting processed successfully!')
+        }
+    })
+
     const router = useRouter();
     const [isUploading, setIsUploading] = React.useState(false);
     const [progress, setProgress] = React.useState(0);
@@ -35,9 +53,10 @@ const MeetingCard = () => {
                 meetingUrl: downloadUrl,
                 name: file.name
             }, {
-                onSuccess: () => {
+                onSuccess: (meeting) => {
                     toast.success("Meeting uploaded successfully")
                     router.push('/meetings')
+                    processMeeting.mutateAsync({ meetingUrl: downloadUrl, meetingId: meeting.id })
                 }
             })
             setIsUploading(false);

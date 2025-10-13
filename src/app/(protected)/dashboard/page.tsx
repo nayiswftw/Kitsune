@@ -8,6 +8,12 @@ import React from 'react'
 import CommitLog from './commit-log';
 import AskQuestionCard from './ask-question-card';
 import MeetingCard from './meeting-card';
+import GithubIssues from './github-issues';
+import GithubPullRequests from './github-prs';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import ArchiveButton from './archive-button';
+import InviteButton from './invite-button';
+import TeamMembers from './team-members';
 
 const DashboardPage = () => {
     const { project } = useProject();
@@ -35,9 +41,13 @@ const DashboardPage = () => {
                     </div>
                 </div>
 
+
                 <div className='h-4'></div>
 
                 <div className="flex items-center gap-4">
+                    <TeamMembers />
+                    <InviteButton />
+                    <ArchiveButton />
 
 
                 </div>
@@ -47,14 +57,33 @@ const DashboardPage = () => {
 
             <div className="mt-4">
                 <div className="grid grid-cols-1 gap-4 sm:grid-cols-5">
-                    <AskQuestionCard /> 
+                    <AskQuestionCard />
                     <MeetingCard />
                 </div>
             </div>
 
             <div className="mt-8"></div>
 
-            <CommitLog />
+            {/* Tabs for different sections */}
+            <Tabs defaultValue="commits" className="w-full">
+                <TabsList className="grid w-full grid-cols-3">
+                    <TabsTrigger value="commits">Commits</TabsTrigger>
+                    <TabsTrigger value="issues">Issues</TabsTrigger>
+                    <TabsTrigger value="prs">Pull Requests</TabsTrigger>
+                </TabsList>
+
+                <TabsContent value="commits" className="mt-6">
+                    <CommitLog />
+                </TabsContent>
+
+                <TabsContent value="issues" className="mt-6">
+                    <GithubIssues />
+                </TabsContent>
+
+                <TabsContent value="prs" className="mt-6">
+                    <GithubPullRequests />
+                </TabsContent>
+            </Tabs>
         </div>
     )
 }

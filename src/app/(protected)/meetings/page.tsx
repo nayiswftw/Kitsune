@@ -4,14 +4,18 @@ import { api } from '@/trpc/react';
 import React from 'react'
 import MeetingCard from '../dashboard/meeting-card';
 import Link from 'next/link';
-import { Badge } from 'lucide-react';
+import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
+import { toast } from 'sonner';
+import useRefetch from '@/hooks/use-refetch';
 
 const MeetingPage = () => {
     const { projectId } = useProject();
     const { data: meetings, isLoading } = api.project.getMeetings.useQuery({ projectId }, {
         refetchInterval: 4000
     })
+    const refetch = useRefetch()
+    const deleteMeeting = api.project.deleteMeeting.useMutation()
     return (
         <>
             <MeetingCard />
@@ -25,12 +29,17 @@ const MeetingPage = () => {
                         <div>
                             <div className='min-w-0'>
                                 <div className="flex items-center gap-2">
-                                    <Link href={`/meeting/${meeting.id}`} className='text-sm font-semibold'>
+                                    <Link href={`/meetings/${meeting.id}`} className='text-sm font-semibold'>
                                         {meeting.name}
                                     </Link>
                                     {meeting.status === 'PROCESSING' && (
-                                        <Badge className='bg-yellow-500 text-white'>
+                                        <Badge className='bg-yellow-500 text-white hover:bg-yellow-600'>
                                             Processing...
+                                        </Badge>
+                                    )}
+                                    {meeting.status === 'COMPLETED' && (
+                                        <Badge variant="default" className='bg-green-600 text-white hover:bg-green-700'>
+                                            Completed
                                         </Badge>
                                     )}
                                 </div>
@@ -47,10 +56,18 @@ const MeetingPage = () => {
 
                         <div className="flex items-center flex-none gap-x-4">
                             <Link href={`/meetings/${meeting.id}`}>
-                                <Button variant={'outline'}>
+                                <Button size={'sm'} variant={'outline'}>
                                     View Meeting
                                 </Button>
                             </Link>
+                            <Button disabled={deleteMeeting.isPending} size={'sm'} variant={'destructive'} onClick={() => deleteMeeting.mutate({ meetingId: meeting.id }, {
+                                onSuccess: () => {
+                                    toast.success("Meeting deleted successfully")
+                                    refetch()
+                                }
+                            })} >
+                                Delete
+                            </Button>
                         </div>
                     </li>
                 ))}

@@ -63,7 +63,7 @@ const QAPage = () => {
                 {question.question}
               </SheetTitle>
               <div className="prose prose-gray max-w-none max-h-[60vh] overflow-y-auto bg-white p-4 rounded-lg shadow-sm border">
-                <MDEditor.Markdown source={question.answer} />
+                <MDEditor.Markdown source={question.answer} className='bg-transparent' />
               </div>
               <CodeReferences fileReferences={question.filesReferences ? JSON.parse(question.filesReferences) : []} />
             </SheetHeader>

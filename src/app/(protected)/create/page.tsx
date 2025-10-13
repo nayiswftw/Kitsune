@@ -38,7 +38,7 @@ const CreatePage = () => {
     }
     return (
         <div className='flex items-center gap-12 h-full justify-center'>
-            <img src='/undraw_github.svg' className='w-auto h-56' />
+            <img src='undraw.svg' className='w-auto h-56' />
             <div>
                 <div>
                     <h1 className='font-semibold text-2xl'>

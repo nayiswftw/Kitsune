@@ -45,6 +45,8 @@ model Project {
 
     savedQuestions Question[]
     meetings       Meeting[]
+    githubIssues   GithubIssue[]
+    githubPullRequests GithubPullRequest[]
 }
 
 model UserToProject {
@@ -140,4 +142,58 @@ model Commit {
     commitDate         DateTime
 
     summary String
+}
+
+model GithubIssue {
+    id        String   @id @default(cuid())
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+
+    projectId String
+    project   Project @relation(fields: [projectId], references: [id])
+
+    issueNumber Int
+    title       String
+    body        String?
+    state       String // open, closed
+    author      String
+    authorAvatar String?
+    labels      String[] // stored as array of label names
+    assignees   String[] // stored as array of usernames
+    comments    Int      @default(0)
+    githubCreatedAt DateTime
+    githubUpdatedAt DateTime
+    url         String
+
+    @@unique([projectId, issueNumber])
+}
+
+model GithubPullRequest {
+    id        String   @id @default(cuid())
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+
+    projectId String
+    project   Project @relation(fields: [projectId], references: [id])
+
+    prNumber    Int
+    title       String
+    body        String?
+    state       String // open, closed, merged
+    author      String
+    authorAvatar String?
+    labels      String[] // stored as array of label names
+    reviewStatus String? // approved, changes_requested, pending
+    mergeable   Boolean  @default(false)
+    draft       Boolean  @default(false)
+    baseBranch  String
+    headBranch  String
+    additions   Int      @default(0)
+    deletions   Int      @default(0)
+    changedFiles Int     @default(0)
+    githubCreatedAt DateTime
+    githubUpdatedAt DateTime
+    url         String
+
+    @@unique([projectId, prNumber])
 }

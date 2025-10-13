@@ -6,7 +6,7 @@ export const loadGithubRepo = async (githubUrl: string, githubToken?: string) =>
     const loader = new GithubRepoLoader(githubUrl, {
         accessToken: githubToken || '',
         branch: 'main',
-        ignoreFiles: ['package-lock.json', 'yarn.lock', 'pnpm-lock.yaml', 'bun.lockb', 'node_modules/**', 'vendor/**', 'Gemfile.lock', 'composer.lock', 'Pipfile.lock', 'poetry.lock', 'requirements.txt', 'go.sum', 'Cargo.lock', 'dist/**', 'build/**', 'out/**', 'target/**', 'bin/**', 'obj/**', '*.exe', '*.dll', '*.so', '*.dylib', '*.class', '*.pyc', '*.pyo', '.git/**', '.gitignore', '.gitattributes', '.gitmodules', '.vscode/**', '.idea/**', '*.swp', '*.swo', '*~', '*.bak', '.vs/**', '*.suo', '*.user', '*.userosscache', '*.sln.docstates', '.project', '.classpath', '.settings/**', '.DS_Store', 'Thumbs.db', 'desktop.ini', '.env', '.env.*', '*.local', '*.log', '*.tmp', 'logs/**', 'tmp/**', 'temp/**', '.cache/**', '.npm/**', '.yarn/**', '.pnp.*', '.next/**', '.nuxt/**', '.parcel-cache/**', '__pycache__/**', '*.egg-info/**', 'coverage/**', '.nyc_output/**', '*.lcov', 'README.md', 'LICENSE', 'CHANGELOG.md', 'docs/**', 'documentation/**', '.github/**', '.gitlab-ci.yml', '.travis.yml', 'Jenkinsfile', 'azure-pipelines.yml', '.svn/**', '.hg/**', '.bzr/**'],
+        ignoreFiles: ['node_modules/**', 'vendor/**', 'package-lock.json', 'yarn.lock', 'pnpm-lock.yaml', 'Gemfile.lock', 'Cargo.lock', 'composer.lock', 'poetry.lock', 'Pipfile.lock', 'dist/**', 'build/**', 'out/**', 'target/**', 'bin/**', 'obj/**', '*.exe', '*.dll', '*.so', '*.dylib', '*.class', '*.pyc', '*.pyo', '__pycache__/**', '.git/**', '.gitignore', '.vscode/**', '.idea/**', '*.swp', '*.swo', '*~', '*.bak', '.vs/**', '*.suo', '*.user', '.DS_Store', 'Thumbs.db', 'desktop.ini', '.env', '.env.*', '*.local', '*.log', 'logs/**', 'tmp/**', 'temp/**', '.cache/**', '.npm/**', '.yarn/**', '.pnp.*', '.next/**', '.nuxt/**', '.parcel-cache/**', '*.egg-info/**', 'coverage/**', '.nyc_output/**', '*.lcov', '*.png', '*.jpg', '*.jpeg', '*.gif', '*.svg', '*.ico', '*.webp', '*.mp4', '*.mp3', '*.wav', '*.pdf', '*.ttf', '*.woff', '*.woff2', '*.eot', '*.min.js', '*.min.css', '*.bundle.js', 'CHANGELOG.md', 'LICENSE', 'LICENSE.md', 'CONTRIBUTING.md', '*.db', '*.sqlite', '*.sqlite3', '*.zip', '*.tar', '*.gz', '*.rar', '*.7z'],
         recursive: true,
         unknown: 'warn',
         maxConcurrency: 5
@@ -50,5 +50,5 @@ const generateEmbeddings = async (docs: Document[]) => {
             sourceCode: JSON.parse(JSON.stringify(doc.pageContent)),
             fileNamee: doc.metadata.source
         }
-    }));    
+    }));
 }
