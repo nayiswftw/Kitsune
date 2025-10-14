@@ -89,7 +89,7 @@ export function AppSidebar() {
                                     <SidebarMenuItem key={item.title}>
                                         <SidebarMenuButton asChild>
                                             <Link href={item.url} className={cn({
-                                                '!bg-primary !text-primary-background': pathname == item.url
+                                                '!bg-primary !text-white': pathname == item.url
                                             })}>
                                                 <item.icon size={16} />
                                                 <span className="ml-2">{item.title}</span>
@@ -114,9 +114,9 @@ export function AppSidebar() {
                                                 setProjectId(project.id)
                                             }}>
                                                 <div className={cn(
-                                                    'rounded-sm border size-6 flex items-center justify-center text-sm bg-background text-primary-background',
+                                                    'rounded-sm border size-6 flex items-center justify-center text-sm bg-background text-white',
                                                     {
-                                                        'bg-primary text-primary-background': project.id === projectId
+                                                        'bg-primary text-white': project.id === projectId
                                                     }
                                                 )}>
                                                     {project.name[0]}

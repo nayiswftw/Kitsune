@@ -26,12 +26,12 @@ const DashboardPage = () => {
                 <div className='w-fit rounded-md bg-primary px-4 py-3'>
                     <div className="flex items-center text">
 
-                        <Github className='text-primary-background size-5' />
+                        <Github className='text-white size-5' />
                         <div className='ml-2'>
-                            <p className='text-sm font-medium text-primary-background'>
+                            <p className='text-sm font-medium text-white'>
 
                                 This project is linked to {' '}
-                                <Link href={project?.githubUrl ?? ""} className='inline-flex items-center text-primary-background/80 hover:underline'>
+                                <Link href={project?.githubUrl ?? ""} className='inline-flex items-center text-white/80 hover:underline'>
                                     {project?.githubUrl}
                                     <ExternalLink className='ml-1 size-4' />
                                 </Link>
