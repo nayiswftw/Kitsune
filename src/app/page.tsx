@@ -1,3 +1,5 @@
+"use client";
+
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -7,8 +9,11 @@ import { DotPattern } from "@/components/ui/dot-pattern";
 import { BorderBeam } from "@/components/ui/border-beam";
 import TextShimmer from "@/components/ui/text-shimmer";
 import Marquee from "@/components/ui/marquee";
+import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import Link from "next/link";
 import Image from "next/image";
+import { useState } from "react";
+import { useUser } from "@clerk/nextjs";
 import { 
   Brain, 
   Search, 
@@ -24,36 +29,207 @@ import {
   BookOpen,
   MessageSquare,
   CheckCircle2,
-  Star
+  Star,
+  Menu,
+  X,
+  LayoutDashboard
 } from "lucide-react";
 
 export default function Home() {
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const { isSignedIn, isLoaded } = useUser();
+
+  const scrollToSection = (sectionId: string) => {
+    const element = document.getElementById(sectionId);
+    if (element) {
+      element.scrollIntoView({ behavior: "smooth" });
+      setMobileMenuOpen(false);
+    }
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-b from-background to-muted">
       {/* Navigation */}
-      <nav className="border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 sticky top-0 z-50">
-        <div className="container mx-auto px-4 py-4 flex items-center justify-between">
-          <Link href="/" className="flex items-center">
-            <Image src="/logo-full.svg" alt="Kitsune" width={180} height={40} />
-          </Link>
-          <div className="hidden md:flex items-center gap-6">
-            <Link href="#features" className="text-sm font-medium hover:text-primary transition-colors">
-              Features
+      <nav className="border-b bg-background/95 backdrop-blur-xl supports-[backdrop-filter]:bg-background/60 sticky top-0 z-50 shadow-sm">
+        <div className="container mx-auto px-4 py-4">
+          <div className="flex items-center justify-between">
+            {/* Logo */}
+            <Link 
+              href="/" 
+              className="flex items-center group transition-transform hover:scale-105 duration-300"
+            >
+              <Image 
+                src="/logo-full.svg" 
+                alt="Kitsune" 
+                width={180} 
+                height={40} 
+                className="group-hover:brightness-110 transition-all"
+              />
             </Link>
-            <Link href="#how-it-works" className="text-sm font-medium hover:text-primary transition-colors">
-              How It Works
-            </Link>
-            <Link href="#tech" className="text-sm font-medium hover:text-primary transition-colors">
-              Technology
-            </Link>
-          </div>
-          <div className="flex items-center gap-3">
-            <Link href="/sign-in">
-              <Button variant="ghost" size="sm">Sign In</Button>
-            </Link>
-            <Link href="/sign-up">
-              <Button size="sm">Get Started</Button>
-            </Link>
+
+            {/* Desktop Navigation */}
+            <div className="hidden md:flex items-center gap-8">
+              <button
+                onClick={() => scrollToSection("features")}
+                className="text-sm font-medium hover:text-primary transition-all duration-200 relative group"
+              >
+                Features
+                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary transition-all duration-300 group-hover:w-full" />
+              </button>
+              <button
+                onClick={() => scrollToSection("how-it-works")}
+                className="text-sm font-medium hover:text-primary transition-all duration-200 relative group"
+              >
+                How It Works
+                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary transition-all duration-300 group-hover:w-full" />
+              </button>
+              <button
+                onClick={() => scrollToSection("tech")}
+                className="text-sm font-medium hover:text-primary transition-all duration-200 relative group"
+              >
+                Technology
+                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary transition-all duration-300 group-hover:w-full" />
+              </button>
+              <Link 
+                href="https://github.com/nayiswftw/Kitsune" 
+                target="_blank"
+                className="text-sm font-medium hover:text-primary transition-all duration-200 relative group flex items-center gap-1"
+              >
+                <Github className="w-4 h-4" />
+                GitHub
+                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary transition-all duration-300 group-hover:w-full" />
+              </Link>
+            </div>
+
+            {/* CTA Buttons */}
+            <div className="hidden md:flex items-center gap-3">
+              {isLoaded && (
+                <>
+                  {isSignedIn ? (
+                    <Link href="/dashboard">
+                      <Button 
+                        size="sm"
+                        className="bg-gradient-to-r from-primary to-purple-600 hover:from-primary/90 hover:to-purple-600/90 shadow-md hover:shadow-lg transition-all duration-200"
+                      >
+                        <LayoutDashboard className="mr-2 w-4 h-4" />
+                        Dashboard
+                      </Button>
+                    </Link>
+                  ) : (
+                    <>
+                      <Link href="/sign-in">
+                        <Button 
+                          variant="ghost" 
+                          size="sm"
+                          className="hover:bg-primary/10 transition-all duration-200"
+                        >
+                          Sign In
+                        </Button>
+                      </Link>
+                      <Link href="/sign-up">
+                        <Button 
+                          size="sm"
+                          className="bg-gradient-to-r from-primary to-purple-600 hover:from-primary/90 hover:to-purple-600/90 shadow-md hover:shadow-lg transition-all duration-200"
+                        >
+                          Get Started
+                          <ArrowRight className="ml-2 w-4 h-4" />
+                        </Button>
+                      </Link>
+                    </>
+                  )}
+                </>
+              )}
+            </div>
+
+            {/* Mobile Menu Button */}
+            <Sheet open={mobileMenuOpen} onOpenChange={setMobileMenuOpen}>
+              <SheetTrigger asChild className="md:hidden">
+                <Button variant="ghost" size="icon" className="md:hidden">
+                  <Menu className="h-6 w-6" />
+                </Button>
+              </SheetTrigger>
+              <SheetContent side="right" className="w-[300px] sm:w-[400px]">
+                <nav className="flex flex-col gap-6 mt-8">
+                  <Link 
+                    href="/" 
+                    className="flex items-center mb-4"
+                    onClick={() => setMobileMenuOpen(false)}
+                  >
+                    <Image 
+                      src="/logo-full.svg" 
+                      alt="Kitsune" 
+                      width={150} 
+                      height={35}
+                    />
+                  </Link>
+                  
+                  <button
+                    onClick={() => scrollToSection("features")}
+                    className="text-lg font-medium hover:text-primary transition-colors text-left py-2 border-b border-border"
+                  >
+                    Features
+                  </button>
+                  <button
+                    onClick={() => scrollToSection("how-it-works")}
+                    className="text-lg font-medium hover:text-primary transition-colors text-left py-2 border-b border-border"
+                  >
+                    How It Works
+                  </button>
+                  <button
+                    onClick={() => scrollToSection("tech")}
+                    className="text-lg font-medium hover:text-primary transition-colors text-left py-2 border-b border-border"
+                  >
+                    Technology
+                  </button>
+                  <Link 
+                    href="https://github.com/nayiswftw/Kitsune" 
+                    target="_blank"
+                    className="text-lg font-medium hover:text-primary transition-colors flex items-center gap-2 py-2 border-b border-border"
+                    onClick={() => setMobileMenuOpen(false)}
+                  >
+                    <Github className="w-5 h-5" />
+                    GitHub
+                  </Link>
+                  
+                  {isLoaded && (
+                    <div className="flex flex-col gap-3 mt-4">
+                      {isSignedIn ? (
+                        <Link href="/dashboard" onClick={() => setMobileMenuOpen(false)}>
+                          <Button 
+                            className="w-full bg-gradient-to-r from-primary to-purple-600"
+                            size="lg"
+                          >
+                            <LayoutDashboard className="mr-2 w-5 h-5" />
+                            Dashboard
+                          </Button>
+                        </Link>
+                      ) : (
+                        <>
+                          <Link href="/sign-in" onClick={() => setMobileMenuOpen(false)}>
+                            <Button 
+                              variant="outline" 
+                              className="w-full"
+                              size="lg"
+                            >
+                              Sign In
+                            </Button>
+                          </Link>
+                          <Link href="/sign-up" onClick={() => setMobileMenuOpen(false)}>
+                            <Button 
+                              className="w-full bg-gradient-to-r from-primary to-purple-600"
+                              size="lg"
+                            >
+                              Get Started
+                              <ArrowRight className="ml-2 w-4 h-4" />
+                            </Button>
+                          </Link>
+                        </>
+                      )}
+                    </div>
+                  )}
+                </nav>
+              </SheetContent>
+            </Sheet>
           </div>
         </div>
       </nav>

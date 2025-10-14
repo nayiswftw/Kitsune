@@ -2,11 +2,17 @@ import { db } from '@/server/db'
 import { auth, clerkClient } from '@clerk/nextjs/server'
 import { notFound, redirect } from 'next/navigation'
 
-export const SyncUser = async () => {
+type Props = {
+    searchParams: Promise<{ redirect?: string }>
+}
+
+const SyncUser = async (props: Props) => {
     const { userId } = await auth()
+    
     if (!userId) {
         throw new Error('User not found')
     }
+    
     const client = await clerkClient()
     const user = await client.users.getUser(userId)
 
@@ -14,9 +20,10 @@ export const SyncUser = async () => {
         return notFound()
     }
 
+    // Upsert user to database
     await db.user.upsert({
         where: {
-            emailAddress: user.emailAddresses[0]?.emailAddress ?? ""
+            emailAddress: user.emailAddresses[0].emailAddress
         },
         update: {
             imageUrl: user.imageUrl,
@@ -25,14 +32,18 @@ export const SyncUser = async () => {
         },
         create: {
             id: userId,
-            emailAddress: user.emailAddresses[0]?.emailAddress ?? "",
+            emailAddress: user.emailAddresses[0].emailAddress,
             imageUrl: user.imageUrl,
             firstName: user.firstName,
             lastName: user.lastName,
         }
     })
 
-    return redirect('/dashboard')
+    // Handle redirect parameter
+    const searchParams = await props.searchParams
+    const redirectPath = searchParams.redirect || '/dashboard'
+    
+    return redirect(redirectPath)
 }
 
 export default SyncUser

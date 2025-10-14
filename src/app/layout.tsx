@@ -2,6 +2,7 @@ import "@/styles/globals.css";
 import { ClerkProvider } from '@clerk/nextjs'
 import type { Metadata } from "next";
 import { Geist } from "next/font/google";
+import { ThemeProvider } from "next-themes";
 
 import { TRPCReactProvider } from "@/trpc/react";
 import { Toaster } from "sonner";
@@ -22,10 +23,12 @@ export default function RootLayout({
 }: Readonly<{ children: React.ReactNode }>) {
 	return (
 		<ClerkProvider>
-			<html lang="en" className={`${geist.variable}`}>
+			<html lang="en" className={`${geist.variable}`} suppressHydrationWarning>
 				<body>
-					<TRPCReactProvider>{children}</TRPCReactProvider>
-					<Toaster />
+					<ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+						<TRPCReactProvider>{children}</TRPCReactProvider>
+						<Toaster />
+					</ThemeProvider>
 				</body>
 			</html>
 		</ClerkProvider>

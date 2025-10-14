@@ -9,6 +9,22 @@ import { toast } from 'sonner';
 const InviteButton = () => {
     const { projectId } = useProject();
     const [open, setOpen] = React.useState(false);
+    const [inviteLink, setInviteLink] = React.useState('');
+
+    // Set invite link only on client side
+    React.useEffect(() => {
+        if (typeof window !== 'undefined' && projectId) {
+            setInviteLink(`${window.location.origin}/join/${projectId}`);
+        }
+    }, [projectId]);
+
+    const handleCopyToClipboard = () => {
+        if (inviteLink) {
+            navigator.clipboard.writeText(inviteLink);
+            toast.success("Copied to clipboard");
+        }
+    };
+
     return (
         <>
             <Dialog open={open} onOpenChange={setOpen}>
@@ -19,14 +35,13 @@ const InviteButton = () => {
                     <p className='text-sm text-gray-500'>
                         Ask them to copy and paste this link
                     </p>
-                    <Input readOnly
-                        className='mt-4'
-                        onClick={() => {
-                            navigator.clipboard.writeText(`${window.location.origin}/join/${projectId}`)
-                            toast.success("Copied to clipboard")
-                        }} 
-                        value={`${window.location.origin}/join/${projectId}`}
-                        />
+                    <Input 
+                        readOnly
+                        className='mt-4 cursor-pointer'
+                        onClick={handleCopyToClipboard}
+                        value={inviteLink}
+                        placeholder="Loading invite link..."
+                    />
                 </DialogContent>
             </Dialog>
             <Button size={'sm'} onClick={() => setOpen(true)}>

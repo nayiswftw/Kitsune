@@ -3,6 +3,7 @@ import { createTRPCRouter, protectedProcedure } from "../trpc";
 import { pollCommits, syncGithubIssues, syncGithubPullRequests, createGithubIssue, addCommentToIssue, approvePullRequest, requestChangesOnPullRequest, mergePullRequest, addCommentToPullRequest, getPullRequestReviews, getPullRequestCommits, getPullRequestComments, getIssueComments, getIssueTimeline, getPullRequestFiles } from "@/lib/github";
 import { indexGithubRepo } from "@/lib/github-loader";
 import { clerkClient } from "@clerk/nextjs/server";
+import { deductCredits, CREDIT_COSTS } from "@/lib/credits";
 
 export const projectRouter = createTRPCRouter({
 
@@ -13,6 +14,13 @@ export const projectRouter = createTRPCRouter({
             githubToken: z.string().optional()
         })
     ).mutation(async ({ ctx, input }) => {
+        // Check if user has enough credits
+        const newBalance = await deductCredits(
+            ctx.user.userId!,
+            CREDIT_COSTS.INDEX_REPOSITORY,
+            `Created project: ${input.name}`
+        );
+
         // Ensure user exists in database (handle cases where user wasn't synced)
         const client = await clerkClient();
         const clerkUser = await client.users.getUser(ctx.user.userId!);
@@ -45,7 +53,7 @@ export const projectRouter = createTRPCRouter({
         })
         await indexGithubRepo(project.id, input.githubUrl, input.githubToken);
         await pollCommits(project.id);
-        return project;
+        return { project, newBalance, creditsUsed: CREDIT_COSTS.INDEX_REPOSITORY };
     }),
     getProjects: protectedProcedure.query(async ({ ctx }) => {
         return await ctx.db.project.findMany({
