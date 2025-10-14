@@ -44,7 +44,7 @@ const InviteButton = () => {
                     />
                 </DialogContent>
             </Dialog>
-            <Button size={'sm'} onClick={() => setOpen(true)}>
+            <Button size={'sm'} onClick={() => setOpen(true)} className='text-white'>
                 Invite Members
             </Button>
         </>

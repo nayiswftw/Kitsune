@@ -204,7 +204,7 @@ export default function BillingPage() {
                                 </CardContent>
                                 <CardFooter>
                                     <Button 
-                                        className="w-full"
+                                        className="w-full text-white"
                                         onClick={() => handlePurchase(pkg.id)}
                                         disabled={purchaseMutation.isPending}
                                     >

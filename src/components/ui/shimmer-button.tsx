@@ -1,6 +1,6 @@
 "use client";
 
-import React, { type CSSProperties } from "react";
+import React, { type CSSProperties, useEffect, useState } from "react";
 import { cn } from "@/lib/utils";
 import { useTheme } from "next-themes";
 
@@ -30,7 +30,14 @@ const ShimmerButton = React.forwardRef<HTMLButtonElement, ShimmerButtonProps>(
     ref
   ) => {
     const { resolvedTheme } = useTheme();
-    const isDark = resolvedTheme === 'dark';
+    const [mounted, setMounted] = useState(false);
+    
+    // Ensure component is mounted before using theme
+    useEffect(() => {
+      setMounted(true);
+    }, []);
+    
+    const isDark = mounted && resolvedTheme === 'dark';
     
     // Set theme-aware defaults
     const defaultBackground = isDark ? "rgba(255, 255, 255, 1)" : "rgba(0, 0, 0, 1)";

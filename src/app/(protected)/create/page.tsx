@@ -96,7 +96,7 @@ const CreatePage = () => {
                             disabled={createProject.isPending}
                         />
                         <div className="h-4"></div>
-                        <Button type='submit' disabled={createProject.isPending} className='w-full'>
+                        <Button type='submit' disabled={createProject.isPending} className='w-full text-white'>
                             {createProject.isPending ? (
                                 <>
                                     <Loader2 className="mr-2 h-4 w-4 animate-spin" />

@@ -9,6 +9,7 @@ import Image from "next/image"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { useTheme } from "next-themes"
+import { useEffect, useState } from "react"
 
 
 const items = [
@@ -50,9 +51,15 @@ export function AppSidebar() {
     const { open } = useSidebar();
     const { projects, projectId, setProjectId } = useProject();
     const { theme, resolvedTheme } = useTheme();
+    const [mounted, setMounted] = useState(false);
+    
+    // Ensure component is mounted before using theme
+    useEffect(() => {
+        setMounted(true);
+    }, []);
     
     // In dark mode, use light-colored logos; in light mode, use dark-colored logos
-    const isDark = resolvedTheme === 'dark';
+    const isDark = mounted && resolvedTheme === 'dark';
     const logoSrc = isDark ? '/logo-light.svg' : '/logo.svg';
     const noLogoSrc = isDark ? '/nologo-light.svg' : '/nologo.svg';
 
@@ -82,7 +89,7 @@ export function AppSidebar() {
                                     <SidebarMenuItem key={item.title}>
                                         <SidebarMenuButton asChild>
                                             <Link href={item.url} className={cn({
-                                                '!bg-primary !text-primary-foreground': pathname == item.url
+                                                '!bg-primary !text-primary-background': pathname == item.url
                                             })}>
                                                 <item.icon size={16} />
                                                 <span className="ml-2">{item.title}</span>
@@ -107,9 +114,9 @@ export function AppSidebar() {
                                                 setProjectId(project.id)
                                             }}>
                                                 <div className={cn(
-                                                    'rounded-sm border size-6 flex items-center justify-center text-sm bg-background text-primary',
+                                                    'rounded-sm border size-6 flex items-center justify-center text-sm bg-background text-primary-background',
                                                     {
-                                                        'bg-primary text-primary-foreground': project.id === projectId
+                                                        'bg-primary text-primary-background': project.id === projectId
                                                     }
                                                 )}>
                                                     {project.name[0]}

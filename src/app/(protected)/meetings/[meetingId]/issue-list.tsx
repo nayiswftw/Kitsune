@@ -82,7 +82,7 @@ function IssueCard({ issue }: { issue: NonNullable<RouterOutputs['project']['get
                     </CardDescription>
                 </CardHeader>
                 <CardContent>
-                    <Button onClick={() => setOpen(true)}>
+                    <Button onClick={() => setOpen(true)} className='w-full text-white'>
                         Details
                     </Button>
                 </CardContent>

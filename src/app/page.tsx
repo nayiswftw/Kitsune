@@ -12,7 +12,7 @@ import Marquee from "@/components/ui/marquee";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import Link from "next/link";
 import Image from "next/image";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useUser } from "@clerk/nextjs";
 import { useTheme } from "next-themes";
 import { AnimatedThemeToggler } from "@/components/ui/animated-theme-toggler";
@@ -39,11 +39,17 @@ import {
 
 export default function Home() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [mounted, setMounted] = useState(false);
   const { isSignedIn, isLoaded } = useUser();
   const { resolvedTheme } = useTheme();
 
+  // Ensure component is mounted before using theme
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
   // In dark mode, use light-colored logos; in light mode, use dark-colored logos
-  const isDark = resolvedTheme === 'dark';
+  const isDark = mounted && resolvedTheme === 'dark';
   const logoFullSrc = isDark ? '/logo-full-light.svg' : '/logo-full.svg';
 
   const scrollToSection = (sectionId: string) => {

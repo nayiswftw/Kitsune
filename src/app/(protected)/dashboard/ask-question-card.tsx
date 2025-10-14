@@ -23,10 +23,16 @@ function AskQuestionCard() {
     const [loading, setLoading] = React.useState(false)
     const [filesReferences, setFilesReferences] = React.useState<{ fileName: string, sourceCode: string, summary: string }[]>([])
     const [answer, setAnswer] = React.useState('')
+    const [mounted, setMounted] = React.useState(false);
     const { resolvedTheme } = useTheme();
     
+    // Ensure component is mounted before using theme
+    React.useEffect(() => {
+        setMounted(true);
+    }, []);
+    
     // Use light logo in dark mode
-    const isDark = resolvedTheme === 'dark';
+    const isDark = mounted && resolvedTheme === 'dark';
     const logoSrc = isDark ? '/logo-light.svg' : '/logo.svg';
 
     const saveAnswer = api.project.saveAnswer.useMutation();
@@ -90,14 +96,14 @@ function AskQuestionCard() {
                     <div className="flex-1 overflow-y-auto p-4 scrollbar-hide">
                         <MDEditor.Markdown 
                             source={answer} 
-                            className='max-w-full !h-full prose prose-sm max-w-none prose-invert' 
+                            className='max-w-full !h-full prose prose-sm max-w-none prose-invert bg-transparent' 
                         />
                     </div>
 
                     <div className="">
                         <CodeReferences fileReferences={filesReferences} />
                         <div className="mt-4 w-full">
-                            <Button onClick={() => { setOpen(false) }} type='button' className="w-full">
+                            <Button onClick={() => { setOpen(false) }} type='button' className="w-full text-white">
                                 Close
                             </Button>
                         </div>
@@ -112,7 +118,7 @@ function AskQuestionCard() {
                     <form onSubmit={onSubmit}>
                         <Textarea placeholder='Which files should I edit to change the home page?' value={question} onChange={e => setQuestion(e.target.value)} />
                         <div className="h-4"></div>
-                        <Button type='submit' disabled={loading} >
+                        <Button type='submit' disabled={loading} className='w-full text-white' >
                             Ask Kitsune!
                         </Button>
                     </form>
