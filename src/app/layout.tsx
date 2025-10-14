@@ -25,7 +25,7 @@ export default function RootLayout({
 		<ClerkProvider>
 			<html lang="en" className={`${geist.variable}`} suppressHydrationWarning>
 				<body>
-					<ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+					<ThemeProvider attribute="class" defaultTheme="light" enableSystem>
 						<TRPCReactProvider>{children}</TRPCReactProvider>
 						<Toaster />
 					</ThemeProvider>
