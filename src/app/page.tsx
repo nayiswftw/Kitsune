@@ -16,15 +16,15 @@ import { useState } from "react";
 import { useUser } from "@clerk/nextjs";
 import { useTheme } from "next-themes";
 import { AnimatedThemeToggler } from "@/components/ui/animated-theme-toggler";
-import { 
-  Brain, 
-  Search, 
-  GitCommit, 
-  Mic, 
-  Zap, 
-  Users, 
-  FileText, 
-  Github, 
+import {
+  Brain,
+  Search,
+  GitCommit,
+  Mic,
+  Zap,
+  Users,
+  FileText,
+  Github,
   ArrowRight,
   Code2,
   Sparkles,
@@ -41,7 +41,7 @@ export default function Home() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const { isSignedIn, isLoaded } = useUser();
   const { resolvedTheme } = useTheme();
-  
+
   // In dark mode, use light-colored logos; in light mode, use dark-colored logos
   const isDark = resolvedTheme === 'dark';
   const logoFullSrc = isDark ? '/logo-full-light.svg' : '/logo-full.svg';
@@ -61,15 +61,15 @@ export default function Home() {
         <div className="container mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
             {/* Logo */}
-            <Link 
-              href="/" 
+            <Link
+              href="/"
               className="flex items-center group transition-transform hover:scale-105 duration-300"
             >
-              <Image 
-                src={logoFullSrc} 
-                alt="Kitsune" 
-                width={180} 
-                height={40} 
+              <Image
+                src={logoFullSrc}
+                alt="Kitsune"
+                width={180}
+                height={40}
                 className="group-hover:brightness-110 transition-all"
               />
             </Link>
@@ -97,8 +97,8 @@ export default function Home() {
                 Technology
                 <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary transition-all duration-300 group-hover:w-full" />
               </button>
-              <Link 
-                href="https://github.com/nayiswftw/Kitsune" 
+              <Link
+                href="https://github.com/nayiswftw/Kitsune"
                 target="_blank"
                 className="text-sm font-medium hover:text-primary transition-all duration-200 relative group flex items-center gap-1"
               >
@@ -115,9 +115,9 @@ export default function Home() {
                 <>
                   {isSignedIn ? (
                     <Link href="/dashboard">
-                      <Button 
+                      <Button
                         size="sm"
-                        className="bg-gradient-to-r from-primary to-purple-600 hover:from-primary/90 hover:to-purple-600/90 shadow-md hover:shadow-lg transition-all duration-200"
+                        className="bg-primary shadow-md hover:shadow-lg transition-all duration-200 text-white"
                       >
                         <LayoutDashboard className="mr-2 w-4 h-4" />
                         Dashboard
@@ -126,8 +126,8 @@ export default function Home() {
                   ) : (
                     <>
                       <Link href="/sign-in">
-                        <Button 
-                          variant="ghost" 
+                        <Button
+                          variant="ghost"
                           size="sm"
                           className="hover:bg-primary/10 transition-all duration-200"
                         >
@@ -135,7 +135,7 @@ export default function Home() {
                         </Button>
                       </Link>
                       <Link href="/sign-up">
-                        <Button 
+                        <Button
                           size="sm"
                           className="bg-gradient-to-r from-primary to-purple-600 hover:from-primary/90 hover:to-purple-600/90 shadow-md hover:shadow-lg transition-all duration-200"
                         >
@@ -158,19 +158,19 @@ export default function Home() {
               </SheetTrigger>
               <SheetContent side="right" className="w-[300px] sm:w-[400px]">
                 <nav className="flex flex-col gap-6 mt-8">
-                  <Link 
-                    href="/" 
+                  <Link
+                    href="/"
                     className="flex items-center mb-4"
                     onClick={() => setMobileMenuOpen(false)}
                   >
-                    <Image 
-                      src={logoFullSrc} 
-                      alt="Kitsune" 
-                      width={150} 
+                    <Image
+                      src={logoFullSrc}
+                      alt="Kitsune"
+                      width={150}
                       height={35}
                     />
                   </Link>
-                  
+
                   <button
                     onClick={() => scrollToSection("features")}
                     className="text-lg font-medium hover:text-primary transition-colors text-left py-2 border-b border-border"
@@ -189,8 +189,8 @@ export default function Home() {
                   >
                     Technology
                   </button>
-                  <Link 
-                    href="https://github.com/nayiswftw/Kitsune" 
+                  <Link
+                    href="https://github.com/nayiswftw/Kitsune"
                     target="_blank"
                     className="text-lg font-medium hover:text-primary transition-colors flex items-center gap-2 py-2 border-b border-border"
                     onClick={() => setMobileMenuOpen(false)}
@@ -198,17 +198,17 @@ export default function Home() {
                     <Github className="w-5 h-5" />
                     GitHub
                   </Link>
-                  
+
                   <div className="flex items-center justify-between py-2 border-b border-border">
                     <span className="text-lg font-medium">Theme</span>
                     <AnimatedThemeToggler className="p-2 hover:bg-accent rounded-md transition-colors" />
                   </div>
-                  
+
                   {isLoaded && (
                     <div className="flex flex-col gap-3 mt-4">
                       {isSignedIn ? (
                         <Link href="/dashboard" onClick={() => setMobileMenuOpen(false)}>
-                          <Button 
+                          <Button
                             className="w-full bg-gradient-to-r from-primary to-purple-600"
                             size="lg"
                           >
@@ -219,8 +219,8 @@ export default function Home() {
                       ) : (
                         <>
                           <Link href="/sign-in" onClick={() => setMobileMenuOpen(false)}>
-                            <Button 
-                              variant="outline" 
+                            <Button
+                              variant="outline"
                               className="w-full"
                               size="lg"
                             >
@@ -228,7 +228,7 @@ export default function Home() {
                             </Button>
                           </Link>
                           <Link href="/sign-up" onClick={() => setMobileMenuOpen(false)}>
-                            <Button 
+                            <Button
                               className="w-full bg-gradient-to-r from-primary to-purple-600"
                               size="lg"
                             >
@@ -255,13 +255,13 @@ export default function Home() {
           duration={3}
           className="absolute inset-0 [mask-image:radial-gradient(500px_circle_at_center,white,transparent)]"
         />
-        
+
         <div className="relative z-10 max-w-4xl mx-auto text-center space-y-8">
           <Badge variant="secondary" className="px-4 py-1.5 text-sm">
             <Sparkles className="w-3 h-3 mr-1 inline" />
             AI-Powered Developer Platform
           </Badge>
-          
+
           <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold tracking-tight">
             The Intelligent
             <br />
@@ -271,12 +271,12 @@ export default function Home() {
             <br />
             Platform
           </h1>
-          
+
           <TextShimmer className="text-xl md:text-2xl max-w-2xl mx-auto">
-            Bridge code and conversation. Merge AI-driven documentation, contextual understanding, 
+            Bridge code and conversation. Merge AI-driven documentation, contextual understanding,
             and team knowledge into a unified developer ecosystem.
           </TextShimmer>
-          
+
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center pt-4">
             <Link href="/sign-up">
               <ShimmerButton className="px-8 py-6 text-lg font-semibold">
@@ -290,7 +290,7 @@ export default function Home() {
               </Button>
             </Link>
           </div>
-          
+
           <div className="pt-12">
             <p className="text-sm text-muted-foreground mb-6">Trusted by developers who value efficiency</p>
             <Marquee className="[--duration:20s]" pauseOnHover>
@@ -337,8 +337,8 @@ export default function Home() {
               Building software as a team is hard
             </h2>
             <p className="text-lg text-muted-foreground">
-              Unclear commit messages, missing documentation, scattered meeting notes, 
-              and endless confusion over "who did what." Developers spend more time 
+              Unclear commit messages, missing documentation, scattered meeting notes,
+              and endless confusion over "who did what." Developers spend more time
               understanding code than actually writing it.
             </p>
             <div className="pt-4">
@@ -453,9 +453,9 @@ export default function Home() {
 
           <div className="max-w-4xl mx-auto grid md:grid-cols-3 gap-8">
             <div className="relative text-center space-y-4 group">
-              <div className="relative w-16 h-16 rounded-full bg-gradient-to-br from-primary/20 to-purple-600/20 flex items-center justify-center mx-auto group-hover:scale-110 transition-transform">
+              <div className="relative w-16 h-16 rounded-full flex items-center justify-center mx-auto group-hover:scale-110 transition-transform">
                 <Github className="w-8 h-8 text-primary" />
-                <div className="absolute inset-0 rounded-full bg-primary/20 blur-xl group-hover:bg-primary/30 transition-colors" />
+                <div className="absolute inset-0 rounded-full group-hover:bg-primary/30 transition-colors" />
               </div>
               <h3 className="text-xl font-semibold">1. Connect Repository</h3>
               <p className="text-muted-foreground">
@@ -464,9 +464,9 @@ export default function Home() {
             </div>
 
             <div className="relative text-center space-y-4 group">
-              <div className="relative w-16 h-16 rounded-full bg-gradient-to-br from-primary/20 to-purple-600/20 flex items-center justify-center mx-auto group-hover:scale-110 transition-transform">
+              <div className="relative w-16 h-16 rounded-full flex items-center justify-center mx-auto group-hover:scale-110 transition-transform">
                 <Brain className="w-8 h-8 text-primary" />
-                <div className="absolute inset-0 rounded-full bg-primary/20 blur-xl group-hover:bg-primary/30 transition-colors" />
+                <div className="absolute inset-0 rounded-full group-hover:bg-primary/30 transition-colors" />
               </div>
               <h3 className="text-xl font-semibold">2. AI Analysis</h3>
               <p className="text-muted-foreground">
@@ -475,9 +475,9 @@ export default function Home() {
             </div>
 
             <div className="relative text-center space-y-4 group">
-              <div className="relative w-16 h-16 rounded-full bg-gradient-to-br from-primary/20 to-purple-600/20 flex items-center justify-center mx-auto group-hover:scale-110 transition-transform">
+              <div className="relative w-16 h-16 rounded-full flex items-center justify-center mx-auto group-hover:scale-110 transition-transform">
                 <Sparkles className="w-8 h-8 text-primary" />
-                <div className="absolute inset-0 rounded-full bg-primary/20 blur-xl group-hover:bg-primary/30 transition-colors" />
+                <div className="absolute inset-0 rounded-full group-hover:bg-primary/30 transition-colors" />
               </div>
               <h3 className="text-xl font-semibold">3. Start Collaborating</h3>
               <p className="text-muted-foreground">
@@ -630,23 +630,24 @@ export default function Home() {
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center pt-4">
               <Link href="/sign-up">
-              <ShimmerButton 
-                className="px-8 py-6 text-lg font-semibold"
-                background="rgba(255, 255, 255, 1)"
-                shimmerColor="rgba(0, 0, 0, 0.8)"
-              >
-                Get Started Free <ArrowRight className="ml-2 w-5 h-5" />
-              </ShimmerButton>
+                <ShimmerButton
+                  className="px-8 py-6 text-lg font-semibold text-black"
+                  background="rgba(255, 255, 255, 1)"
+                  shimmerColor="rgba(0, 0, 0, 0.8)"
+                >
+                  Get Started Free <ArrowRight className="ml-2 w-5 h-5" />
+                </ShimmerButton>
               </Link>
               <Link href="https://github.com/nayiswftw/Kitsune" target="_blank">
-              <Button 
-                size="lg" 
-                variant="outline"
-                className="text-lg px-8 py-6 hover:scale-105 transition-transform bg-white/10 hover:bg-white/20 text-white border-white/30 hover:border-white/50 backdrop-blur-sm"
-              >
-                <Star className="mr-2 w-5 h-5 fill-current" />
-                Star on GitHub
-              </Button>
+                <Button
+                  size="lg"
+                  variant="outline"
+                  className="text-lg px-8 py-6 hover:scale-105 transition-transform bg-white/10 hover:bg-white/20 text-white border-white/30 hover:border-white/50 backdrop-blur-sm"
+                >
+
+                  <Star className="mr-2 w-5 h-5 fill-current" />
+                  Star on GitHub
+                </Button>
               </Link>
             </div>
           </div>
@@ -658,7 +659,7 @@ export default function Home() {
         <div className="container mx-auto px-4">
           <div className="flex flex-col md:flex-row justify-between items-center gap-4 ">
             <div className="flex items-center">
-              <Image src={logoFullSrc} alt="Kitsune" width={1920} height={40} className="mt-15"/>
+              <Image src={logoFullSrc} alt="Kitsune" width={1920} height={40} className="mt-15" />
             </div>
           </div>
         </div>
