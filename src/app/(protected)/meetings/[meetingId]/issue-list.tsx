@@ -19,14 +19,14 @@ const IssueList = ({ meetingId }: Props) => {
             <div className="p-8">
                 <div className="mx-auto flex max-w-2xl items-center justify-between gap-x-8 border-b pb-8 lg:mx-0 lg:max-w-none">
                     <div className="flex items-center gap-x-6">
-                        <div className="rounded-full border bg-white p-3">
+                        <div className="rounded-full border bg-card p-3">
                             <VideoIcon className='h-6 w-6' />
                         </div>
                         <h1>
-                            <div className="text-sm leading-6 text-gray-600">
+                            <div className="text-sm leading-6 text-muted-foreground">
                                 Meeting on {"" + meeting.createdAt.toLocaleDateString()}
                             </div>
-                            <div className="mt-1 text-base font-semibold leading-6 text-gray-900">
+                            <div className="mt-1 text-base font-semibold leading-6 text-foreground">
                                 {meeting.name}
                             </div>
                         </h1>
@@ -58,14 +58,14 @@ function IssueCard({ issue }: { issue: NonNullable<RouterOutputs['project']['get
                         <DialogDescription>
                             {issue.createdAt.toLocaleDateString()}
                         </DialogDescription>
-                        <p className='text-gray-600'>
+                        <p className='text-muted-foreground'>
                             {issue.headline}
                         </p>
-                        <blockquote className='mt-2 border-l-4 border-gray-300 bg-gray-50 p-4 '>
-                            <span className='text-sm text-gray-600'>
+                        <blockquote className='mt-2 border-l-4 border-border bg-muted p-4 '>
+                            <span className='text-sm text-muted-foreground'>
                                 {issue.start} - {issue.end}
                             </span>
-                            <p className="font-medium italic leading-relaxed text-gray-900">
+                            <p className="font-medium italic leading-relaxed text-foreground">
                                 {issue.summary}
                             </p>
                         </blockquote>

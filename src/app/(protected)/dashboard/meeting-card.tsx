@@ -70,10 +70,10 @@ const MeetingCard = () => {
                 {!isUploading && (
                     <>
                         <Presentation className='h-10 w-10 animate-bounce' />
-                        <h3 className="mt-2 text-sm font-semibold text-gray-900">
+                        <h3 className="mt-2 text-sm font-semibold text-foreground">
                             Create a new meeting
                         </h3>
-                        <p className="mt-1 text-center text-sm text-gray-500">
+                        <p className="mt-1 text-center text-sm text-muted-foreground">
                             Analyse your meeting with Kitsune.
                             <br />
                             Powered by AI.
@@ -91,11 +91,11 @@ const MeetingCard = () => {
                     <div className=''>
                         <CircularProgressbar value={progress} text={`${progress}%`} className="size-20" styles={
                             buildStyles({
-                                pathColor: '#000',
-                                textColor: '#000',
+                                pathColor: 'hsl(var(--primary))',
+                                textColor: 'hsl(var(--foreground))',
                             })
                         } />
-                        <p className="text-sm text-gray-500 text-center">Upload your meeting...</p>
+                        <p className="text-sm text-muted-foreground text-center">Upload your meeting...</p>
                     </div>
                 )}
             </Card>

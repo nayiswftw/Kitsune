@@ -14,6 +14,8 @@ import Link from "next/link";
 import Image from "next/image";
 import { useState } from "react";
 import { useUser } from "@clerk/nextjs";
+import { useTheme } from "next-themes";
+import { AnimatedThemeToggler } from "@/components/ui/animated-theme-toggler";
 import { 
   Brain, 
   Search, 
@@ -38,6 +40,11 @@ import {
 export default function Home() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const { isSignedIn, isLoaded } = useUser();
+  const { resolvedTheme } = useTheme();
+  
+  // In dark mode, use light-colored logos; in light mode, use dark-colored logos
+  const isDark = resolvedTheme === 'dark';
+  const logoFullSrc = isDark ? '/logo-full-light.svg' : '/logo-full.svg';
 
   const scrollToSection = (sectionId: string) => {
     const element = document.getElementById(sectionId);
@@ -59,7 +66,7 @@ export default function Home() {
               className="flex items-center group transition-transform hover:scale-105 duration-300"
             >
               <Image 
-                src="/logo-full.svg" 
+                src={logoFullSrc} 
                 alt="Kitsune" 
                 width={180} 
                 height={40} 
@@ -103,6 +110,7 @@ export default function Home() {
 
             {/* CTA Buttons */}
             <div className="hidden md:flex items-center gap-3">
+              <AnimatedThemeToggler className="p-2 hover:bg-accent rounded-md transition-colors" />
               {isLoaded && (
                 <>
                   {isSignedIn ? (
@@ -156,7 +164,7 @@ export default function Home() {
                     onClick={() => setMobileMenuOpen(false)}
                   >
                     <Image 
-                      src="/logo-full.svg" 
+                      src={logoFullSrc} 
                       alt="Kitsune" 
                       width={150} 
                       height={35}
@@ -190,6 +198,11 @@ export default function Home() {
                     <Github className="w-5 h-5" />
                     GitHub
                   </Link>
+                  
+                  <div className="flex items-center justify-between py-2 border-b border-border">
+                    <span className="text-lg font-medium">Theme</span>
+                    <AnimatedThemeToggler className="p-2 hover:bg-accent rounded-md transition-colors" />
+                  </div>
                   
                   {isLoaded && (
                     <div className="flex flex-col gap-3 mt-4">
@@ -600,27 +613,27 @@ export default function Home() {
       </section>
 
       {/* CTA Section */}
-      <section className="relative py-20 bg-primary text-primary-foreground overflow-hidden">
+      <section className="relative py-20 bg-gradient-to-br from-primary via-primary to-purple-600 dark:from-primary/90 dark:via-primary/80 dark:to-purple-600/80 text-primary-foreground overflow-hidden">
         <AnimatedGridPattern
           numSquares={40}
           maxOpacity={0.2}
           duration={3}
-          className="absolute inset-0 text-white"
+          className="absolute inset-0 opacity-30 dark:opacity-20"
         />
         <div className="relative z-10 container mx-auto px-4">
           <div className="max-w-3xl mx-auto text-center space-y-8">
-            <h2 className="text-3xl md:text-5xl font-bold">
+            <h2 className="text-3xl md:text-5xl font-bold text-white">
               Ready to transform your workflow?
             </h2>
-            <p className="text-xl opacity-90">
+            <p className="text-xl text-white/90">
               Join developers who are making collaboration effortless, context-rich, and intelligent
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center pt-4">
               <Link href="/sign-up">
               <ShimmerButton 
-                className="px-8 py-6 text-lg font-semibold bg-background text-foreground"
+                className="px-8 py-6 text-lg font-semibold"
                 background="rgba(255, 255, 255, 1)"
-                shimmerColor="#000000"
+                shimmerColor="rgba(0, 0, 0, 0.8)"
               >
                 Get Started Free <ArrowRight className="ml-2 w-5 h-5" />
               </ShimmerButton>
@@ -629,7 +642,7 @@ export default function Home() {
               <Button 
                 size="lg" 
                 variant="outline"
-                className="text-lg px-8 py-6 hover:scale-105 transition-transform bg-white text-foreground border-white"
+                className="text-lg px-8 py-6 hover:scale-105 transition-transform bg-white/10 hover:bg-white/20 text-white border-white/30 hover:border-white/50 backdrop-blur-sm"
               >
                 <Star className="mr-2 w-5 h-5 fill-current" />
                 Star on GitHub
@@ -643,9 +656,9 @@ export default function Home() {
       {/* Footer */}
       <footer className="border-t py-12 max-h-[30vh] bg-background overflow-hidden">
         <div className="container mx-auto px-4">
-          <div className="flex flex-col md:flex-row justify-between items-center gap-4">
+          <div className="flex flex-col md:flex-row justify-between items-center gap-4 ">
             <div className="flex items-center">
-              <Image src="/logo-full.svg" alt="Kitsune" width={1920} height={32} className="mt-15 " />
+              <Image src={logoFullSrc} alt="Kitsune" width={1920} height={40} className="mt-15"/>
             </div>
           </div>
         </div>

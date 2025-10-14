@@ -177,19 +177,19 @@ const GithubPullRequests = () => {
     }
 
     const getStateIcon = (state: string, draft: boolean) => {
-        if (draft) return <AlertCircle className="size-4 text-gray-600" />
+        if (draft) return <AlertCircle className="size-4 text-muted-foreground" />
         if (state === 'open') return <Clock className="size-4 text-green-600" />
         if (state === 'merged') return <GitMerge className="size-4 text-purple-600" />
         if (state === 'closed') return <XCircle className="size-4 text-red-600" />
-        return <XCircle className="size-4 text-gray-600" />
+        return <XCircle className="size-4 text-muted-foreground" />
     }
 
     const getStateColor = (state: string, draft: boolean) => {
-        if (draft) return 'bg-gray-100 text-gray-800 dark:bg-gray-800 dark:text-gray-200'
+        if (draft) return 'bg-muted text-muted-foreground'
         if (state === 'open') return 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200'
         if (state === 'merged') return 'bg-purple-100 text-purple-800 dark:bg-purple-900 dark:text-purple-200'
         if (state === 'closed') return 'bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200'
-        return 'bg-gray-100 text-gray-800'
+        return 'bg-muted text-muted-foreground'
     }
 
     const getStateBadgeText = (state: string, draft: boolean) => {

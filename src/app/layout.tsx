@@ -10,7 +10,7 @@ import { Toaster } from "sonner";
 export const metadata: Metadata = {
 	title: "Kitsune",
 	description: "Collaborative AI GitHub Desktop",
-	icons: [{ rel: "icon", url: "/favicon.ico" }],
+	icons: [{ rel: "icon", url: "/logo-light.svg" }],
 };
 
 const geist = Geist({

@@ -33,19 +33,19 @@ const MeetingPage = () => {
                                         {meeting.name}
                                     </Link>
                                     {meeting.status === 'PROCESSING' && (
-                                        <Badge className='bg-yellow-500 text-white hover:bg-yellow-600'>
+                                        <Badge className='bg-yellow-500 text-primary-foreground hover:bg-yellow-600'>
                                             Processing...
                                         </Badge>
                                     )}
                                     {meeting.status === 'COMPLETED' && (
-                                        <Badge variant="default" className='bg-green-600 text-white hover:bg-green-700'>
+                                        <Badge variant="default" className='bg-green-600 text-primary-foreground hover:bg-green-700'>
                                             Completed
                                         </Badge>
                                     )}
                                 </div>
                             </div>
 
-                            <div className='flex items-center text-xs text-gray-500 gap-x-2'>
+                            <div className='flex items-center text-xs text-muted-foreground gap-x-2'>
                                 <p className='whitespace-nowrap'>
                                     {meeting.createdAt.toLocaleDateString()}
                                 </p>

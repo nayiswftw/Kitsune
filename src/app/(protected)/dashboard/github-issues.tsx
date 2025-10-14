@@ -143,13 +143,13 @@ const GithubIssues = () => {
     const getStateIcon = (state: string) => {
         if (state === 'open') return <Clock className="size-4 text-green-600" />
         if (state === 'closed') return <CheckCircle2 className="size-4 text-purple-600" />
-        return <XCircle className="size-4 text-gray-600" />
+        return <XCircle className="size-4 text-muted-foreground" />
     }
 
     const getStateColor = (state: string) => {
         if (state === 'open') return 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200'
         if (state === 'closed') return 'bg-purple-100 text-purple-800 dark:bg-purple-900 dark:text-purple-200'
-        return 'bg-gray-100 text-gray-800'
+        return 'bg-muted text-muted-foreground'
     }
 
     return (

@@ -13,6 +13,7 @@ import CodeReferences from './code-references';
 import { api } from '@/trpc/react';
 import { toast } from 'sonner';
 import useRefetch from '@/hooks/use-refetch';
+import { useTheme } from 'next-themes';
 
 
 function AskQuestionCard() {
@@ -22,6 +23,11 @@ function AskQuestionCard() {
     const [loading, setLoading] = React.useState(false)
     const [filesReferences, setFilesReferences] = React.useState<{ fileName: string, sourceCode: string, summary: string }[]>([])
     const [answer, setAnswer] = React.useState('')
+    const { resolvedTheme } = useTheme();
+    
+    // Use light logo in dark mode
+    const isDark = resolvedTheme === 'dark';
+    const logoSrc = isDark ? '/logo-light.svg' : '/logo.svg';
 
     const saveAnswer = api.project.saveAnswer.useMutation();
 
@@ -52,7 +58,7 @@ function AskQuestionCard() {
                     <DialogHeader className='flex-shrink-0'>
                         <div className="flex items-center">
                             <div className="flex items-center gap-2">
-                                <Image src="/logo.svg" alt="Kitsune" width={40} height={40} />
+                                <Image src={logoSrc} alt="Kitsune" width={40} height={40} />
                                 <DialogTitle className="text-lg font-semibold">Kitsune Answer</DialogTitle>
                             </div>
                             <Button 
@@ -106,7 +112,7 @@ function AskQuestionCard() {
                     <form onSubmit={onSubmit}>
                         <Textarea placeholder='Which files should I edit to change the home page?' value={question} onChange={e => setQuestion(e.target.value)} />
                         <div className="h-4"></div>
-                        <Button type='submit' disabled={loading}>
+                        <Button type='submit' disabled={loading} >
                             Ask Kitsune!
                         </Button>
                     </form>
